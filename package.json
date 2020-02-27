@@ -1,0 +1,68 @@
+{
+  "name": "sca-todo-app",
+  "version": "1.0.0",
+  "description": "final project for the she code africa mentoring program",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf dist && babel src --out-dir dist",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "dev": "DEBUG='api:*' nodemon --exec npm run restart",
+    "restart": "npm run build && npm run start",
+    "start": "nodemon --exec babel-node src/server.js",
+    "test": "cross-env NODE_ENV=test mocha --require @babel/register --require regenerator-runtime/runtime src/ --recursive --exit",
+    "test:coverage": "nyc npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kengneruphine/sca-todo-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kengneruphine/sca-todo-app/issues"
+  },
+  "homepage": "https://github.com/kengneruphine/sca-todo-app#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/node": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.0",
+    "debug": "^4.1.1",
+    "eslint-config": "^0.3.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "express": "^4.17.1",
+    "import": "0.0.6",
+    "mocha": "^7.1.0",
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2",
+    "nyc": "^15.0.0",
+    "prettier": "^1.19.1"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.6",
+    "@babel/preset-env": "^7.8.6",
+    "@babel/runtime": "^7.8.4",
+    "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
+    "rimraf": "^3.0.2"
+  }
+}
