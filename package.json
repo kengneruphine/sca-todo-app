@@ -43,6 +43,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "cors": "^2.8.5",
+    "coveralls": "^3.0.9",
     "cross-env": "^7.0.0",
     "debug": "^4.1.1",
     "eslint-config": "^0.3.0",
