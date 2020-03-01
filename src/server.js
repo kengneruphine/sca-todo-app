@@ -8,7 +8,6 @@ dotenv.config();
 
 const server = http.createServer(app);
 const port = process.env.PORT;
-console.log("port is",port)
 
 app.set('port', port);
 
