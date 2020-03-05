@@ -2,7 +2,7 @@
   "require": ["@babel/register", "regenerator-runtime/runtime"],
   "reporter": ["html", "lcov", "text"],
   "include": ["src/**/*.js"],
-  "exclude": ["**/*.spec.js", "**/*.test.js", "src/config/*.js"],
+  "exclude": ["**/*.spec.js", "**/*.test.js", "src/config/*.js", "src/database.js"],
   "sourceMap": false,
   "instrument": false,
   "check-coverage": true,

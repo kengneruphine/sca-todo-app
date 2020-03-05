@@ -4,9 +4,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const DB = process.env.DB_URL;
-console.log("database url is", DB);
+
 module.exports = function () {
-    mongoose.connect(DB)
+    mongoose.connect(DB,{ useNewUrlParser: true })
     .then(() => {
         console.log('Successful connected to MongoDB ATLAS');
     })
