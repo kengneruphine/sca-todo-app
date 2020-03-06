@@ -3,7 +3,8 @@ import cors from 'cors'
 import morgan from 'morgan'
 import db from './database';
 
-//import route from './routes/index'
+import authRoute from './routes/auth';
+import listRoute from './routes/list';
 
 const app = express();
 
@@ -15,7 +16,8 @@ app.use(morgan('dev'))
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-//app.use('/', route);
+app.use('/api/user', authRoute);
+app.use('/api/list', listRoute);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

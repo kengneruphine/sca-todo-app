@@ -1,0 +1,61 @@
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import User from '../models/users';
+import {registerValidation, loginValidation} from '../validation'
+
+const router = express.Router();
+router.post('/register', async (req, res) => {
+
+    //validating the data received before creating a new user
+    const { error } = registerValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
+    //checking if the user is already in the database
+    const emailExist = await User.findOne({ email: req.body.email });
+    if (emailExist) return res.status(400).send('Email already exists');
+
+    //HASH THE PASSWORD
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    //create  a new user
+    const user = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: hashedPassword
+    });
+    try {
+        const savedUser = await user.save();
+        res.status(200).send({savedUser}); //returning the user
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+//Setting up the login route
+router.post('/login', async (req, res) => {
+    //validating the data received before creating a new user
+    const { error } = loginValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
+    //checking if the email exists
+    const user = await User.findOne({ email: req.body.email }); //getting the user already stored in the database
+    if (!user) return res.status(400).send('Email is not found');
+
+    //Check if password is correct
+    const validPass = await bcrypt.compare(req.body.password, user.password);
+    if (!validPass) return res.status(400).send('Invalid password');
+
+    //create and assign token
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+    res.header('auth-token', token).send(token);  //adding our token to the header when a user login
+
+    //res.send("logged in");
+
+});
+
+
+
+export default router;
