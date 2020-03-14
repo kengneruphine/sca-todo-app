@@ -1,12 +1,9 @@
-import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/users';
 import {registerValidation, loginValidation} from '../validation'
 
-const router = express.Router();
-router.post('/register', async (req, res) => {
-
+exports.registerUser = async function (req, res) {
     //validating the data received before creating a new user
     const { error } = registerValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -32,10 +29,9 @@ router.post('/register', async (req, res) => {
     } catch (err) {
         res.status(400).send(err);
     }
-});
+};
 
-//Setting up the login route
-router.post('/login', async (req, res) => {
+exports.loginUser = async function (req, res) {
     //validating the data received before creating a new user
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -53,9 +49,4 @@ router.post('/login', async (req, res) => {
     res.header('auth-token', token).send(token);  //adding our token to the header when a user login
 
     //res.send("logged in");
-
-});
-
-
-
-export default router;
+}

@@ -19,5 +19,4 @@ const loginValidation = (data) => {
 }
 
 
-export default registerValidation;
-export default loginValidation;
+export { registerValidation ,loginValidation };
