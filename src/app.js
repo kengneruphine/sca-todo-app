@@ -3,7 +3,7 @@ import cors from 'cors'
 import morgan from 'morgan'
 import db from './database';
 
-//import route from './routes/index'
+import apiRouter from './routes/index'
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.use(morgan('dev'))
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-//app.use('/', route);
+app.use('/api', apiRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

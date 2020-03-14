@@ -23,6 +23,3 @@ after_success:
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT© 2020 GitHub, Inc.
-
-env:
-  - DB_URL='mongodb+srv://grace:bIwdzDRydpY28vZc@cluster0-n7fk2.mongodb.net/test?retryWrites=true&w=majority'
