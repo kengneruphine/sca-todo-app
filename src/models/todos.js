@@ -5,7 +5,11 @@ const todoSchema = mongoose.Schema({
     description: { type: String, required: true },
     status: { type: String, required: true, enum:['Active','Complete','Pastdue'],default:'Active' },
     dueDate: { type: Date, required: true },
-    createdBy: { type: Number, required: true },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'TodoList'
+    },
 }, {
     timestamps: true
 })

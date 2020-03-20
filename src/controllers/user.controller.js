@@ -50,3 +50,16 @@ exports.loginUser = async function (req, res) {
 
     //res.send("logged in");
 }
+
+// getting a user with all todo list created by him
+exports.getUser = async function (req, res) {
+    try {
+         await User.findOne({ _id: req.params.userId })
+            .populate('todoList')
+             .then(function(User) {
+                res.json(User);
+        })
+    } catch (err) {
+        res.status(500).json({ message: err });
+    }
+}
