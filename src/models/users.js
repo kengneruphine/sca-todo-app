@@ -26,10 +26,10 @@ const userSchema = mongoose.Schema({
         min: 6
     },
     // A user can create many list of todos
-    listTodos: [
+    todoList: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'List'  // get us to get full fields of List
+            ref: 'TodoList'  // get us to get full fields of List
         }
     ]
 });

@@ -1,9 +1,13 @@
 import mongoose from 'mongoose'
 
-const listTodoSchema = mongoose.Schema({
+const todoListSchema = mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String },
-    createdBy: {type:String},
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
     // A list has many todos
     todos: [
         {
@@ -14,6 +18,6 @@ const listTodoSchema = mongoose.Schema({
     timestamps: true
 })
 
-const List = mongoose.model('List', listTodoSchema);
+const TodoList = mongoose.model('TodoList', todoListSchema);
 
-export default List;
+export default TodoList;
