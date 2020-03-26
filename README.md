@@ -3,8 +3,9 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/0e19925f2d7876d8e844/maintainability)](https://codeclimate.com/github/kengneruphine/sca-todo-app/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/0e19925f2d7876d8e844/test_coverage)](https://codeclimate.com/github/kengneruphine/sca-todo-app/test_coverage)
 # sca-todo-app
-Final project for the She Code Africa Mentoring program
-The app allows Users:
+Final project for the She Code Africa Mentoring program.
+
+The app allows Users to do the following:
 - Register and login into their account
 - Create a todo list
 - Get all todos for a todo list
