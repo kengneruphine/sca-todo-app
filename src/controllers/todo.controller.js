@@ -20,13 +20,15 @@ exports.getTodo = async function (req, res) {
     }
 }
 
-exports.createTodo = function (req, res) {
+exports.createTodo = async function (req, res) {
+    const todoList = await TodoList.findOne({ _id: req.params.todoListId })
+
     const todo = new Todo();
         todo.title = req.body.title,
         todo.description = req.body.description,
         todo.status = req.body.status,
         todo.dueDate = req.body.dueDate,
-        todo.createdBy = req.body.createdBy
+        todo.createdBy = todoList._id
         todo.save()
         .then(function (Todo) {
             return TodoList.findByIdAndUpdate({ _id: req.params.todoListId }, { $push: { todos: Todo._id } }, { new: true });
@@ -47,7 +49,7 @@ exports.updateTodo = async function (req, res) {
                     description: req.body.description,
                     status: req.body.status,
                     dueDate: req.body.dueDate,
-                    createdBy: req.body.createdBy
+                    //createdBy: req.body.createdBy
                 }
             });
         res.status(200).json(updatedTodo);

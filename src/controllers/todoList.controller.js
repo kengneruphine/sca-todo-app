@@ -23,11 +23,12 @@ exports.getTodoList = async function (req, res) {
    }
 }
 
-exports.createTodoList = function (req, res) {
-const todoList = new TodoList();
+exports.createTodoList = async function (req, res) {
+    const user = await User.findOne({ _id: req.params.userId })
+    const todoList = new TodoList();
     todoList.name = req.body.name,
-    todoList.description = req.body.description,
-    todoList.createdBy = req.body.createdBy
+        todoList.description = req.body.description,
+        todoList.createdBy = user._id;
 todoList.save()
     .then(function (TodoList) {
         return User.findOneAndUpdate({ _id: req.params.userId }, { $push: { todoList: TodoList._id } }, { new: true });
