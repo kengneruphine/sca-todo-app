@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/users';
-import {registerValidation, loginValidation} from '../validation'
+import { registerValidation, loginValidation } from '../validation'
 
 exports.registerUser = async function (req, res) {
     //validating the data received before creating a new user
@@ -25,9 +25,9 @@ exports.registerUser = async function (req, res) {
     });
     try {
         const savedUser = await user.save();
-        res.status(200).send({savedUser}); //returning the user
+        res.status(200).json({ savedUser, message: 'User has been created' }); //returning the user
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).json({ message: err.message });
     }
 };
 
@@ -48,17 +48,32 @@ exports.loginUser = async function (req, res) {
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
     res.header('auth-token', token).send(token);  //adding our token to the header when a user login
 
-    //res.send("logged in");
+    return res.status(200).json({
+        message: "Login successfully",
+        token
+    })
 }
 
 // getting a user with all todo list created by him
 exports.getUser = async function (req, res) {
     try {
-         await User.findOne({ _id: req.params.userId })
-            .populate('todoList')
-             .then(function(User) {
-                res.json(User);
-        })
+
+        const id = req.params.userId;
+        const userid = req.user._id;
+
+        //Make sure the passed id is that of the logged in user
+        if (userid.toString() !== id.toString()) {
+            return res.status(401).json({ message: "Sorry, you don't have the permission to get this data" });
+        }
+
+        const user = await User.findById(id)
+                .populate('todoList');
+            
+            if (!user) {
+                return res.status(401).json({ message: "User does not exist" });
+            }
+            
+        res.status(200).json({ user , message:'User details'});
     } catch (err) {
         res.status(500).json({ message: err });
     }
@@ -69,6 +84,6 @@ exports.getAllUser = async function (req, res) {
         const users = await User.find();
         res.status(200).json(users);
     } catch (err) {
-        res.status(500).json({message: err})
+        res.status(500).json({ message: err })
     }
 }
